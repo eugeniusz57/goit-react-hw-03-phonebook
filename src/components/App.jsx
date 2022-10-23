@@ -6,6 +6,8 @@ import { nanoid } from 'nanoid';
 import { Filter } from "./Filter/Filter";
 import { ContactList } from "./ContactList/ContactList ";
 
+const LS_KEY = 'contacts'
+
 export class App extends React.Component{
 
   state = {
@@ -18,6 +20,22 @@ export class App extends React.Component{
     filter: ''
   }
   
+  componentDidMount() {
+    const LS = localStorage.getItem(LS_KEY);
+    if(LS){
+      this.setState({
+        contacts: JSON.parse(LS)
+      })
+    }
+
+  }
+
+  componentDidUpdate(_, prevState) {
+    if(prevState.contacts !== this.state.contacts){
+      localStorage.setItem(LS_KEY, JSON.stringify(this.state.contacts))
+
+    }
+  }
   hendleNameChange = e => {
     const {name, value} = e.target;
     this.setState({[name]: value})
