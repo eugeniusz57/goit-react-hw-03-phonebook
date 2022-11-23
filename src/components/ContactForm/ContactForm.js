@@ -16,7 +16,7 @@ export class ContactForm extends React.Component {
     this.setState({ [name]: value });
   };
 
-  Clear = () => {
+  clear = () => {
     this.setState({
       name: '',
       number: '',
@@ -26,7 +26,7 @@ export class ContactForm extends React.Component {
   hendlOnSubmit = e => {
     e.preventDefault();
     this.props.onSubmitDate(this.state);
-    this.Clear();
+    this.clear();
   };
 
   render() {
