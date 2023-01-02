@@ -1,7 +1,8 @@
 import React from 'react';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Title, TitleSeccond } from './App.styled';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { nanoid } from 'nanoid';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList ';
@@ -47,11 +48,14 @@ export class App extends React.Component {
           contact.number === number
       )
     ) {
-      return alert(`${name} or number: ${number} is alredy in contact`);
+      return toast.info(`${name} or phone:${number} is alredy in contact`, {
+        autoClose: 3000,
+      });
     }
     this.setState(prevState => ({
       contacts: [...prevState.contacts, { id: nanoid(), name, number }],
     }));
+    toast.success(`Contact ${name} created!`);
   };
 
   idLabelName = nanoid();
@@ -74,6 +78,7 @@ export class App extends React.Component {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
+    toast.success(`Contact deleted!`);
   };
 
   render() {
@@ -102,6 +107,7 @@ export class App extends React.Component {
         ) : (
           <p>You don't have any contact</p>
         )}
+        <ToastContainer />
       </div>
     );
   }
